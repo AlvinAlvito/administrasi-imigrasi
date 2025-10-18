@@ -172,32 +172,40 @@ class SuratSayaController extends Controller
         return back()->with('success', 'Pengajuan surat berhasil dihapus.');
     }
 
+
     public function cetakPdf($id)
     {
         $pegawaiId = $this->currentPegawaiId();
         if (!$pegawaiId)
             return back()->withErrors(['login' => 'Pegawai belum teridentifikasi.']);
 
-        $spd = \App\Models\SuratPerjalananDina::with(['pegawai', 'pimpinan', 'rincianBiaya'])
-            ->where('pegawai_id', $pegawaiId)
-            ->findOrFail($id);
+        $spd = \App\Models\SuratPerjalananDina::with([
+            'pegawai.pegawaiProfile',
+            'pimpinan.pimpinanProfile',
+            'rincianBiaya'
+        ])->where('pegawai_id', $pegawaiId)->findOrFail($id);
 
-        // Nama file aman (ganti / dan \ dengan - , lalu buang karakter aneh)
-        $safeNoSurat = str_replace(['/', '\\'], '-', $spd->no_surat);
+        // filename aman
+        $safeNoSurat = preg_replace('/[\/\\\\]+/', '-', $spd->no_surat);
         $safeNoSurat = preg_replace('/[^A-Za-z0-9\-\._]/', '_', $safeNoSurat);
         $filename = 'SPD-' . $safeNoSurat . '.pdf';
 
         if (class_exists(\Barryvdh\DomPDF\Facade\Pdf::class)) {
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pegawai.surat_pdf', compact('spd'));
-            // Bisa download:
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::setOptions([
+                'isRemoteEnabled' => true,   // aman, walau kita pakai data URI
+                'isHtml5ParserEnabled' => true,
+            ])
+                ->loadView('pegawai.surat_pdf', compact('spd'))
+                ->setPaper('A4', 'portrait');
+
             return $pdf->download($filename);
-            // Atau stream di browser:
             // return $pdf->stream($filename);
         }
 
-        // Fallback HTML
         return view('pegawai.surat_pdf', compact('spd'));
     }
+
+
 
 
     private function generateNoSurat(): string
