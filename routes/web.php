@@ -131,6 +131,15 @@ Route::get('/admin/surat', function () {
     return app(SuratAdminController::class)->index();
 })->name('admin.surat.index');
 
+// ===================
+// (ADMIN) Cetak/Download PDF Surat
+// ===================
+use App\Http\Controllers\Admin\SuratController as AdminSuratController;
+
+Route::get('/admin/surat/{id}/pdf', function ($id) {
+    if (!session('is_admin')) return redirect('/');
+    return app(AdminSuratController::class)->pdf($id);
+})->name('admin.surat.pdf');
 
 // ===================
 // Dashboard Pimpinan
@@ -161,6 +170,15 @@ Route::post('/pimpinan/surat/{id}/tolak', function (Request $request, $id) {
     return app(SuratApprovalController::class)->reject($request, $id);
 })->name('pimpinan.surat.reject');
 
+// ===================
+// (PIMPINAN) Profil Saya
+// ===================
+use App\Http\Controllers\Pimpinan\ProfilController as PimpinanProfilController;
+
+Route::get('/pimpinan/profil', function () {
+    if (!session('is_pimpinan')) return redirect('/');
+    return app(PimpinanProfilController::class)->show();
+})->name('pimpinan.profil');
 
 // ===================
 // Dashboard Pegawai
@@ -172,6 +190,13 @@ Route::get('/pegawai', function () {
     if (!session('is_pegawai')) return redirect('/');
     return app(PegawaiDashboardController::class)->index();
 })->name('pegawai.index');
+
+// Profiil pegawai
+use App\Http\Controllers\Pegawai\ProfilController as PegawaiProfilController;
+Route::get('/pegawai/profil', function () {
+    if (!session('is_pegawai')) return redirect('/');
+    return app(PegawaiProfilController::class)->show();
+})->name('pegawai.profil');
 
 // ===================
 // (PEGAWAI) CRUD Surat Milik Sendiri + Cetak PDF

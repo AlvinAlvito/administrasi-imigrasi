@@ -179,7 +179,7 @@ class SuratSayaController extends Controller
         if (!$pegawaiId)
             return back()->withErrors(['login' => 'Pegawai belum teridentifikasi.']);
 
-        $spd = \App\Models\SuratPerjalananDina::with([
+        $spd = SuratPerjalananDina::with([
             'pegawai.pegawaiProfile',
             'pimpinan.pimpinanProfile',
             'rincianBiaya'

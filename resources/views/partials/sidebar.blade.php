@@ -1,10 +1,14 @@
 <nav>
     <div class="logo-name">
         <div class="logo-image">
-            <img src="/images/logo.jpg" alt="">
+            <img src="/images/logo.png" alt="">
         </div>
         <span class="logo_name">
-            @if(session('role')) {{ ucfirst(session('role')) }} @else Dashboard @endif
+            @if (session('role'))
+                {{ ucfirst(session('role')) }}
+            @else
+                Dashboard
+            @endif
         </span>
     </div>
 
@@ -12,7 +16,7 @@
         <ul class="nav-links">
 
             {{-- ================= ADMIN ================= --}}
-            @if(session('is_admin'))
+            @if (session('is_admin'))
                 <li>
                     <a href="{{ route('admin.index') }}" class="{{ Request::is('admin') ? 'active' : '' }}">
                         <i class="uil uil-estate"></i>
@@ -21,14 +25,16 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.pegawai.index') }}" class="{{ Request::is('admin/akun-pegawai') ? 'active' : '' }}">
+                    <a href="{{ route('admin.pegawai.index') }}"
+                        class="{{ Request::is('admin/akun-pegawai') ? 'active' : '' }}">
                         <i class="uil uil-users-alt"></i>
                         <span class="link-name">Akun Pegawai</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.pimpinan.index') }}" class="{{ Request::is('admin/akun-pimpinan') ? 'active' : '' }}">
+                    <a href="{{ route('admin.pimpinan.index') }}"
+                        class="{{ Request::is('admin/akun-pimpinan') ? 'active' : '' }}">
                         <i class="uil uil-user-check"></i>
                         <span class="link-name">Akun Pimpinan</span>
                     </a>
@@ -43,7 +49,7 @@
             @endif
 
             {{-- ================= PIMPINAN ================= --}}
-            @if(session('is_pimpinan'))
+            @if (session('is_pimpinan'))
                 <li>
                     <a href="{{ route('pimpinan.index') }}" class="{{ Request::is('pimpinan') ? 'active' : '' }}">
                         <i class="uil uil-estate"></i>
@@ -52,15 +58,25 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('pimpinan.surat.index') }}" class="{{ Request::is('pimpinan/surat') ? 'active' : '' }}">
+                    <a href="{{ route('pimpinan.surat.index') }}"
+                        class="{{ Request::is('pimpinan/surat') ? 'active' : '' }}">
                         <i class="uil uil-check-circle"></i>
                         <span class="link-name">Verifikasi Surat</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('pimpinan.profil') }}"
+                        class="{{ Request::is('pimpinan/profil') ? 'active' : '' }}">
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">Profil</span>
+                    </a>
+                </li>
             @endif
 
+
             {{-- ================= PEGAWAI ================= --}}
-            @if(session('is_pegawai'))
+            @if (session('is_pegawai'))
                 <li>
                     <a href="{{ route('pegawai.index') }}" class="{{ Request::is('pegawai') ? 'active' : '' }}">
                         <i class="uil uil-estate"></i>
@@ -69,15 +85,25 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('pegawai.surat.index') }}" class="{{ Request::is('pegawai/surat') ? 'active' : '' }}">
+                    <a href="{{ route('pegawai.surat.index') }}"
+                        class="{{ Request::is('pegawai/surat') ? 'active' : '' }}">
                         <i class="uil uil-file-plus-alt"></i>
                         <span class="link-name">Surat Saya</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('pegawai.profil') }}"
+                        class="{{ Request::is('pegawai/profil') ? 'active' : '' }}">
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">Profil</span>
+                    </a>
+                </li>
             @endif
 
+
             {{-- Jika belum login (fallback) --}}
-            @if(!session('is_admin') && !session('is_pimpinan') && !session('is_pegawai'))
+            @if (!session('is_admin') && !session('is_pimpinan') && !session('is_pegawai'))
                 <li>
                     <a href="{{ route('login') }}" class="{{ Request::is('/') ? 'active' : '' }}">
                         <i class="uil uil-estate"></i>

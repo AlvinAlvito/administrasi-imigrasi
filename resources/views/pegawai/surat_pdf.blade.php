@@ -59,7 +59,7 @@
     .fw-bold { font-weight: bold; }
     .mb-1{ margin-bottom:6px; } .mb-2{ margin-bottom:12px;} .mb-3{ margin-bottom:18px;}
     table { width:100%; border-collapse: collapse; }
-    td, th { padding:8px; vertical-align: top; }
+    td, th { padding:4px; vertical-align: top; }
     .border { border:1px solid #000; }
     .no-border { border:0; }
     .w-50{ width:50%; } .w-60{ width:60%; } .w-40{ width:40%; }
@@ -67,14 +67,13 @@
     .table-tight td, .table-tight th { padding:6px; }
     .underline { text-decoration: underline; }
     .ttd-box { height:90px; }
-    .logo { width:78px; }
+    .logo { width:118px; }
 
     /* ======= Header Lampiran kanan atas ======= */
-/* ======= Header Lampiran kanan atas (anti mepet) ======= */
 .lampiran-header-wrap{
     position: relative;
     height: 140px;
-    padding-top: 32px;   /* ✅ dorong isi turun tanpa collapse */
+    padding-top: 96px;   /* ✅ dorong isi turun tanpa collapse */
 }
 .lampiran-logo{
     text-align: center;
