@@ -12,11 +12,12 @@
     $gender       = $p->jenis_kelamin ?? '-';
     $tmtFormatted = !empty($p?->tmt) ? \Carbon\Carbon::parse($p->tmt)->format('d/m/Y') : '-';
 
-    // tanda tangan (jika diupload ke storage/app/public)
-    $ttdUrl = null;
-    if (!empty($p?->tanda_tangan)) {
-        $ttdUrl = asset('storage/'.$p->tanda_tangan);
-    }
+  // tanda tangan (sekarang disimpan langsung di public/)
+$ttdUrl = null;
+if (!empty($p?->tanda_tangan)) {
+    $ttdUrl = asset($p->tanda_tangan);
+}
+
 @endphp
 
 <style>

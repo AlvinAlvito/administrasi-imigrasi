@@ -45,7 +45,7 @@ class AkunPegawaiController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => \Illuminate\Support\Facades\Hash::make($data['password'] ?? '12345678'),
+            'password' => Hash::make($data['password'] ?? '12345678'),
             'role' => 'pegawai',
             'nip' => $data['nip'] ?? null,
             'jabatan' => $data['jabatan'] ?? null,
@@ -74,7 +74,7 @@ class AkunPegawaiController extends Controller
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', 'max:100', \Illuminate\Validation\Rule::unique('users', 'email')->ignore($user->id)],
+            'email' => ['required', 'email', 'max:100', Rule::unique('users', 'email')->ignore($user->id)],
             'nip' => ['nullable', 'string', 'max:30'],
             'jabatan' => ['nullable', 'string', 'max:100'],
             'password' => ['nullable', 'string', 'min:6'],
@@ -96,7 +96,7 @@ class AkunPegawaiController extends Controller
             'email' => $data['email'],
             'nip' => $data['nip'] ?? null,
             'jabatan' => $data['jabatan'] ?? null,
-            'password' => isset($data['password']) ? \Illuminate\Support\Facades\Hash::make($data['password']) : $user->password,
+            'password' => isset($data['password']) ? Hash::make($data['password']) : $user->password,
         ]);
 
         $profile = PegawaiProfile::firstOrNew(['user_id' => $user->id]);

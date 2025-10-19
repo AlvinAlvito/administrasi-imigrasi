@@ -21,7 +21,7 @@ Route::post('/', function (Request $request) {
     $password = $request->password;
 
     // Login admin manual
-    if ($username === 'admin' && $password === '123') {
+    if ($username === 'admin' && $password === 'inventaris123') {
         session([
             'role' => 'admin',
             'is_admin' => true,

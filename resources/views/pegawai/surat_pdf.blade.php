@@ -34,17 +34,30 @@
         $logoData = 'data:'.$mime.';base64,'.base64_encode(file_get_contents($logoAbs));
     }
 
-    // TTD pimpinan (storage/app/public/…)
-    $ttdData = null;
-    $ttdRel = optional(optional($spd->pimpinan)->pimpinanProfile)->tanda_tangan;
-    if ($ttdRel) {
-        $ttdAbs = public_path('storage/'.$ttdRel);
-        if (file_exists($ttdAbs)) {
-            $ext  = strtolower(pathinfo($ttdAbs, PATHINFO_EXTENSION));
-            $mime = $ext === 'jpg' ? 'image/jpeg' : 'image/'.$ext;
-            $ttdData = 'data:'.$mime.';base64,'.base64_encode(file_get_contents($ttdAbs));
-        }
+  // TTD pimpinan (disimpan langsung di public/…)
+$ttdData = null;
+$ttdRel  = optional(optional($spd->pimpinan)->pimpinanProfile)->tanda_tangan; // contoh: "uploads/tanda_tangan/ttd.png"
+
+if (!empty($ttdRel)) {
+    $ttdAbs = public_path($ttdRel); // <-- langsung ke public/, tidak pakai 'storage/'
+    if (is_file($ttdAbs)) {
+        $ext  = strtolower(pathinfo($ttdAbs, PATHINFO_EXTENSION));
+        $mimeMap = [
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png'  => 'image/png',
+            'gif'  => 'image/gif',
+            'webp' => 'image/webp',
+        ];
+        $mime = $mimeMap[$ext] ?? 'image/png';
+
+        // Data URI base64 agar aman dipakai di DomPDF (tanpa perlu isRemoteEnabled)
+        $ttdData = 'data:'.$mime.';base64,'.base64_encode(file_get_contents($ttdAbs));
     }
+    // (opsional) else fallback ke URL publik jika DomPDF kamu sudah enable remote:
+    // else { $ttdData = asset($ttdRel); }
+}
+
 @endphp
 <!DOCTYPE html>
 <html lang="id">
