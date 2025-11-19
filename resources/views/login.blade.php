@@ -12,7 +12,7 @@
     <div class="container"> <input type="checkbox" id="flip">
         <div class="cover">
             <div class="front">
-                <img src="https://imigrasitanjungbalai.org/V1/assets/img/hero-bg.jpg" alt="">
+                <img src="/Images/login.jpg" alt="">
                 <div class="text">
                     <span class="text-1">
                         Layanan Keimigrasian<br>Profesional dan Humanis
@@ -24,7 +24,7 @@
             </div>
 
             <div class="back">
-                <img class="backImg" src="https://imigrasitanjungbalai.org/V1/assets/img/hero-bg.jpg" alt="">
+                <img class="backImg" src="/Images/login.jpg" alt="">
                 <div class="text">
                     <span class="text-1">
                         Melayani dengan Integritas<br>Transparansi dan Inovasi

@@ -13,7 +13,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('https://imigrasitanjungbalai.org/V1/assets/img/hero-bg.jpg') center/cover no-repeat;
+  background: url('/Images/login.jpg') center/cover no-repeat;
   padding: 30px;
 }
 
